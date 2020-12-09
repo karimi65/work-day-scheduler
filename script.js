@@ -4,16 +4,14 @@ $(document).ready(function() {
     $("#currentDay").text(moment().format('MMMM Do YYYY, h:mm a'))
 
     // add click listener for save-button
-    $('saveBtn').on('click', saveMySchedule())
-
-    function saveMySchedule() {
-        // console.log(this);
+    $('.saveBtn').on('click', function () {
+        console.log(this);
         // get values
-        var text = $(this).siblings('.describtion').val();
+        var text = $(this).siblings('.description').val();
         var time = $(this).parent().attr('id');
         // put data in local storage
         localStorage.setItem(time, text);
-    }
+    })
 
     // Get data from local storage
     $('#t9am .description').val(localStorage.getItem('t9am'));
@@ -30,7 +28,7 @@ $(document).ready(function() {
     function timeTracker() {
         var thisTime = moment().hour();
 
-        // loop for time blocks
+        // loop over time blocks
         $('.time-block').each(function () {
             var blockHour = parseInt($(this).attr('id').split('hour')[1]);
             console.log (blockHour, thisTime);
