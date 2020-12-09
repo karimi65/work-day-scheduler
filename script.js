@@ -25,31 +25,31 @@ $(document).ready(function() {
     $('#t5pm .description').val(localStorage.getItem('t5pm'));
 
 
-    function timeTracker() {
-        var thisTime = moment().hour();
+    var elements = $(".time-block");
+    var d = new Date();
+    var h = d.getHours();
+       
+    // loop over time block    
+    for (i = 0; i < elements.length; i++) {
+        var t = parseInt(elements[i].getAttribute("data-hour"));
 
-        // loop over time blocks
-        $('.time-block').each(function () {
-            var blockHour = parseInt($(this).attr('id').split('hour')[1]);
-            console.log (blockHour, thisTime);
-
-            // if moved past this time
-            if (blockHour < thisTime) {
-                $(this).addClass('past');
-                $(this).removeClass('future');
-                $(this).removeClass('present');
-            } 
-            else if (blockHour === thisTime) {
-                $(this).removeClass('past');
-                $(this).addClass('present');
-                $(this).removeClass('future');  
-            }
-            else {
-                $(this).removeClass('present');
-                $(this).removeClass('past');
-                $(this).addClass('future');  
-            }
-        })
-    }
-    timeTracker();
+        // check if we've moved past this time and change the color
+        if (h < t) {
+            elements[i].classList.add('future');
+            elements[i].classList.remove('past');
+            elements[i].classList.remove('present');
+        }  else if (h > t) {
+            elements[i].classList.add('past');
+            elements[i].classList.remove('future');
+            elements[i].classList.remove('present');
+        } else if (h === t) {
+            elements[i].classList.add('present');
+            elements[i].classList.remove('future');
+            elements[i].classList.remove('past');
+        } else if (h > 16 && h < 9) {
+            elements[i].classList.add('future');
+            elements[i].classList.remove('past');
+            elements[i].classList.remove('present');
+        }
+    } 
 })
